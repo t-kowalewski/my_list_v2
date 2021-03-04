@@ -12,7 +12,7 @@ const clearInput = () => {
   document.getElementById('extra-value').value = '';
 };
 
-const renderMovies = () => {
+const renderMovies = (filter = '') => {
   const movieList = document.getElementById('movie-list');
 
   if (movies.length === 0) {
@@ -24,7 +24,12 @@ const renderMovies = () => {
 
   movieList.innerHTML = '';
 
-  movies.forEach((movieObj) => {
+  // Finding if we're outputing full list or filtered
+  const filteredMovies = !filter
+    ? movies
+    : movies.filter((movie) => movie.info.title.includes(filter));
+
+  filteredMovies.forEach((movieObj) => {
     const movieEl = document.createElement('li');
     let text = `${movieObj.info.title} `;
 
@@ -69,5 +74,11 @@ const addMovieHandler = () => {
   console.log('🚀 ~ addMovieHandler ~ newMovie', newMovie);
 };
 
+const filterMovieHandler = () => {
+  const filterInput = document.getElementById('filter-title').value;
+  renderMovies(filterInput);
+};
+
 // Listeners
 addMovieBtn.addEventListener('click', addMovieHandler);
+searchBtn.addEventListener('click', filterMovieHandler);
