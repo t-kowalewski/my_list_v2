@@ -12,6 +12,25 @@ const clearInput = () => {
   document.getElementById('extra-value').value = '';
 };
 
+const renderMovies = () => {
+  const movieList = document.getElementById('movie-list');
+
+  if (movies.length === 0) {
+    movieList.classList.remove('visible');
+    return;
+  } else {
+    movieList.classList.add('visible');
+  }
+
+  movieList.innerHTML = '';
+
+  movies.forEach((movieObj) => {
+    const movieEl = document.createElement('li');
+    movieEl.textContent = movieObj.info.title;
+    movieList.append(movieEl);
+  });
+};
+
 // Handlers
 const addMovieHandler = () => {
   const titleInput = document.getElementById('title').value;
@@ -37,6 +56,8 @@ const addMovieHandler = () => {
 
   movies.push(newMovie);
   clearInput();
+  renderMovies();
+
   console.log('🚀 ~ addMovieHandler ~ newMovie', newMovie);
 };
 
