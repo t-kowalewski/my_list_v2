@@ -31,11 +31,13 @@ const renderMovies = (filter = '') => {
 
   filteredMovies.forEach((movieObj) => {
     const movieEl = document.createElement('li');
-    let text = `${movieObj.info.title} `;
+    const { info, ...otherProps } = movieObj; // otherProps will return object with remaining properties
+    console.log('🚀 ~ filteredMovies.forEach ~ otherProps', otherProps);
+    let text = `${info.title} `;
 
-    for (const key in movieObj.info) {
+    for (const key in info) {
       if (key !== 'title') {
-        text += `(${key}: ${movieObj.info[key]})`;
+        text += `(${key}: ${info[key]})`;
       }
     }
 
