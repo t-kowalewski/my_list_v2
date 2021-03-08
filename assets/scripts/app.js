@@ -32,8 +32,11 @@ const renderMovies = (filter = '') => {
   filteredMovies.forEach((movieObj) => {
     const movieEl = document.createElement('li');
     const { info, ...otherProps } = movieObj; // otherProps will return object with remaining properties
+    let { titleToUppercase } = movieObj;
+    // titleToUppercase = titleToUppercase.bind(movieObj);
     console.log('🚀 ~ filteredMovies.forEach ~ otherProps', otherProps);
-    let text = `${movieObj.titleToUppercase()} `;
+    // let text = `${movieObj.titleToUppercase()} `;
+    let text = `${titleToUppercase.call(movieObj)} `;
 
     for (const key in info) {
       if (key !== 'title') {
