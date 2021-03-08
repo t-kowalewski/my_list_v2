@@ -39,7 +39,7 @@ const renderMovies = (filter = '') => {
     let text = `${titleToUppercase.call(movieObj)} `;
 
     for (const key in info) {
-      if (key !== 'title') {
+      if (key !== 'title' && key !== '_title') {
         text += `(${key}: ${info[key]})`;
       }
     }
@@ -55,18 +55,27 @@ const addMovieHandler = () => {
   const extraInfoName = document.getElementById('extra-name').value;
   const extraInfoValue = document.getElementById('extra-value').value;
 
-  if (
-    titleInput.trim() === '' ||
-    extraInfoName.trim() === '' ||
-    extraInfoValue.trim() === ''
-  ) {
+  if (extraInfoName.trim() === '' || extraInfoValue.trim() === '') {
     alert('One or few input fields were empty');
     return;
   }
 
   const newMovie = {
     info: {
-      title: titleInput,
+      // title: titleInput,
+      // Setter
+      set title(value) {
+        if (value.trim() === '') {
+          this._title = 'DEFAULT';
+          return;
+        }
+        this._title = value;
+      },
+      // Getter
+      get title() {
+        return this._title;
+      },
+
       [extraInfoName]: extraInfoValue,
     },
     id: Math.random(),
@@ -75,6 +84,9 @@ const addMovieHandler = () => {
       return this.info.title.toUpperCase();
     },
   };
+
+  newMovie.info.title = titleInput;
+  console.log(newMovie.info.title);
 
   movies.push(newMovie);
   clearInput();
